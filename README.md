@@ -45,5 +45,7 @@ What each piece does:
 
 Not backed up (reinstall or regenerate): pi skills / prompts / profiles, npm addons
 (reinstall via `pi install npm:<package>`), sessions and state, all secrets.
+Pi skills are installed from gists — re-fetch them from
+<https://gist.github.com/AndreiDrang>.
 Verify after restore: `zellij setup --check` and `alacritty --version && zellij --version`.
 
