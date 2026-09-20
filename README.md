@@ -11,7 +11,7 @@ stored config to its destination and you're back at the known-good state.
 | Alacritty       | 0.17.0                       | terminal emulator                                                    |
 | Zellij          | 0.45.1                       | multiplexer; Alacritty starts it as its shell                        |
 | Theme           | Kanagawa Wave                | palette file imported by `alacritty.toml`                            |
-| Bash            | 5.3.9                        | stock, no customization                                              |
+| Bash            | 5.3.9                        | stock + dynamic pane-title block (OSC 0)                             |
 | pi coding agent | 0.86.1                       | npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 |
 | OS              | Ubuntu 26.04.1 LTS (Wayland) | —                                                                    |
 
@@ -27,6 +27,7 @@ Copy each file to its live location (`mkdir -p` the parent dir first):
 | `pi/settings.json`                    | `~/.pi/agent/settings.json`                     |
 | `pi/mcp.json`                         | `~/.pi/agent/mcp.json` (then `chmod 600`)       |
 | `pi/extensions/`                      | `~/.pi/agent/extensions/`                       |
+| `bash/pane-title.sh`                 | append to `~/.bashrc`                            |
 
 What each piece does:
 
@@ -42,6 +43,11 @@ What each piece does:
   `<YOUR_CONTEXT7_KEY>` are placeholders — fill them after restore, then re-login
   each provider (`~/.pi/agent/auth.json` is never backed up).
 - **`extensions/`** — `herdr-agent-state.ts`, `tokenjuice.js` (vendored).
+- **`bash/pane-title.sh`** — dynamic zellij pane titles: while a command runs the pane
+  title shows the command, at the prompt it shows `user@host: cwd`. Zellij renders this
+  in pane frames and collapsed/stacked pane lines. Precedence: manual rename
+  (`Ctrl p` `c` / `zellij action rename-pane`) > this OSC title > command name.
+  Install: `grep -q zellij-pane-title ~/.bashrc || cat bash/pane-title.sh >> ~/.bashrc`.
 
 Not backed up (reinstall or regenerate): pi skills / prompts / profiles, npm addons
 (reinstall via `pi install npm:<package>`), sessions and state, all secrets.
