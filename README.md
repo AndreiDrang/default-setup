@@ -76,13 +76,14 @@ git clone --depth 1 https://github.com/alacritty/alacritty-theme ~/.config/alacr
 ## Refresh this backup (after changing live configs)
 
 ```bash
-cp ~/.config/alacritty/alacritty.toml             ~/Documents/Prog/Private/default-setup/alacritty/
-cp ~/.config/alacritty/themes/kanagawa_wave.toml  ~/Documents/Prog/Private/default-setup/alacritty/themes/
-cp ~/.config/zellij/config.kdl                    ~/Documents/Prog/Private/default-setup/zellij/
-cp ~/.pi/agent/settings.json                      ~/Documents/Prog/Private/default-setup/pi/
-cp ~/.pi/agent/extensions/*                       ~/Documents/Prog/Private/default-setup/pi/extensions/
+REPO=~/path/to/default-setup   # adjust to wherever you cloned this repo
+cp ~/.config/alacritty/alacritty.toml             "$REPO/alacritty/"
+cp ~/.config/alacritty/themes/kanagawa_wave.toml  "$REPO/alacritty/themes/"
+cp ~/.config/zellij/config.kdl                    "$REPO/zellij/"
+cp ~/.pi/agent/settings.json                      "$REPO/pi/"
+cp ~/.pi/agent/extensions/*                       "$REPO/pi/extensions/"
 # mcp.json — ALWAYS re-sanitize (see the pi section), never cp it raw
-cd ~/Documents/Prog/Private/default-setup && git add -A && git commit -m "refresh configs"
+cd "$REPO" && git add -A && git commit -m "refresh configs"
 ```
 
 ## How the pieces fit
@@ -180,7 +181,7 @@ cp pi/mcp.json ~/.pi/agent/mcp.json && chmod 600 ~/.pi/agent/mcp.json
 ### Refresh (mcp.json must be re-sanitized every time!)
 
 ```bash
-python3 -c "import re; d=open('/home/homer/.pi/agent/mcp.json').read(); \
+python3 -c "import re,os; d=open(os.path.expanduser('~/.pi/agent/mcp.json')).read(); \
   d=re.sub(r'Bearer [A-Za-z0-9._-]+','Bearer <YOUR_ZAI_API_TOKEN>',d); \
   d=re.sub(r'(\"CONTEXT7_API_KEY\":\s*\")[^\"]*',r'\1<YOUR_CONTEXT7_KEY>',d); \
   open('pi/mcp.json','w').write(d)"
