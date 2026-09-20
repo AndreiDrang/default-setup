@@ -32,7 +32,6 @@ default-setup/
     ├── settings.json                # pi settings: default model, packages, subagent overrides
     ├── mcp.json                     # 10 MCP servers — SANITIZED (placeholders, no real tokens)
     ├── extensions/                  # local extensions: herdr-agent-state.ts, tokenjuice.js
-    ├── prompts/                     # 7 slash-command prompt templates (/init-agents, /commit-changes, …)
     └── profiles/pi-subagents/       # subagent profiles
 ```
 
@@ -83,7 +82,6 @@ cp ~/.config/alacritty/themes/kanagawa_wave.toml  ~/Documents/Prog/Private/defau
 cp ~/.config/zellij/config.kdl                    ~/Documents/Prog/Private/default-setup/zellij/
 cp ~/.pi/agent/settings.json                      ~/Documents/Prog/Private/default-setup/pi/
 cp ~/.pi/agent/extensions/*                       ~/Documents/Prog/Private/default-setup/pi/extensions/
-cp ~/.pi/agent/prompts/*                          ~/Documents/Prog/Private/default-setup/pi/prompts/
 # mcp.json — ALWAYS re-sanitize (see the pi section), never cp it raw
 cd ~/Documents/Prog/Private/default-setup && git add -A && git commit -m "refresh configs"
 ```
@@ -120,13 +118,14 @@ globally via npm (`@earendil-works/pi-coding-agent`) under **nvm Node v24.16.0**
 | `pi/settings.json`         | `~/.pi/agent/settings.json`   | theme `dark`, default provider/model `zai/glm-5.3` + thinking `high`, enabled `packages` list, subagent model overrides (scout/worker → gpt-5.6-luna, researcher → glm-5.2, oracle → gpt-5.6-terra) |
 | `pi/mcp.json`              | `~/.pi/agent/mcp.json`        | 10 MCP servers (context7, cloudflare-docs, pg-aiguide, playwright, web-search-prime, osgrep, drawio, codegraph, zread, fff) — **SANITIZED** |
 | `pi/extensions/`           | `~/.pi/agent/extensions/`     | local extensions: `herdr-agent-state.ts`, `tokenjuice.js` (vendored, 250 KB) |
-| `pi/prompts/`              | `~/.pi/agent/prompts/`        | 7 slash-command templates (see below) |
 | `pi/profiles/pi-subagents/`| `~/.pi/agent/profiles/pi-subagents/` | subagent profiles |
 
-**Skills are deliberately not backed up** (`~/.pi/agent/skills/`, `~/.agents/skills/`): the
-content is re-installable stock/reference material (Cloudflare docs bundle, agents-sdk,
-SEO toolchain); the genuinely custom skills live as project-local `.agents/skills/`
-inside their own repos.
+**Skills and prompt templates are deliberately not backed up** (`~/.pi/agent/skills/`,
+`~/.agents/skills/`, `~/.pi/agent/prompts/`): skills are re-installable stock/reference
+content (Cloudflare docs bundle, agents-sdk, SEO toolchain). The prompts were personal
+slash commands — kept as inventory for manual recreation: `/init-agents`, `/init-architecture`,
+`/init-design`, `/init-custom-skill`, `/commit-changes`, `/hard-plan-execute`,
+`copilot-instructions` — re-fetch from wherever they were originally authored if needed.
 
 ### Addons — reinstall, don't copy
 
@@ -161,20 +160,6 @@ pi-mcp-adapter ^2.34.0, @ff-labs/pi-fff ^0.10.6, @juicesharp/* ^2.10.1,
   `usage-extension-cache.json`, `trust.json` (per-project trust grants),
   `bin/` (fd/rg — auto-downloaded by pi).
 
-### Prompt templates (`pi/prompts/` — pi slash commands)
-
-Custom `/commands` for the pi TUI:
-
-| Command | What it does |
-|---|---|
-| `/init-agents` | generate & write a useful `AGENTS.md` tree for a repo |
-| `/init-architecture` | generate `ARCHITECTURE.md` from evidence in the codebase |
-| `/init-design` | generate repository design instructions (`DESIGN.md`) for AI agents |
-| `/init-custom-skill` | create a repository-local agent skill from user-provided context/examples |
-| `/commit-changes` | structured local commits (conventional messages, **no push**) |
-| `/hard-plan-execute` | execute a plan produced by the `.hard-planner` tool |
-| `copilot-instructions` | generate GitHub Copilot instructions (`.github/copilot-instructions.md`) |
-
 ### Restore
 
 ```bash
@@ -188,7 +173,6 @@ npm install -g @earendil-works/pi-coding-agent   # pinned: 0.86.1
 mkdir -p ~/.pi/agent
 cp pi/settings.json ~/.pi/agent/
 cp pi/extensions/*  ~/.pi/agent/extensions/
-cp pi/prompts/*     ~/.pi/agent/prompts/
 cp -r pi/profiles/pi-subagents ~/.pi/agent/profiles/
 cp pi/mcp.json ~/.pi/agent/mcp.json && chmod 600 ~/.pi/agent/mcp.json
 
