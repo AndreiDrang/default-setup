@@ -43,10 +43,12 @@ What each piece does:
   `<YOUR_CONTEXT7_KEY>` are placeholders — fill them after restore, then re-login
   each provider (`~/.pi/agent/auth.json` is never backed up).
 - **`extensions/`** — `herdr-agent-state.ts`, `tokenjuice.js` (vendored).
-- **`bash/pane-title.sh`** — dynamic zellij pane titles: while a command runs the pane
-  title shows the command, at the prompt it shows `user@host: cwd`. Zellij renders this
-  in pane frames and collapsed/stacked pane lines. Precedence: manual rename
-  (`Ctrl p` `c` / `zellij action rename-pane`) > this OSC title > command name.
+- **`bash/pane-title.sh`** — dynamic zellij pane titles: `label — user@host: cwd` at the
+  prompt, `label — running-command` while a command runs (shown in pane frames and
+  collapsed/stacked pane lines). `zlabel <text>` names a pane, `zlabel` clears it (stored
+  per `$ZELLIJ_PANE_ID` under `~/.cache/zellij-pane-labels/`). Use `zlabel` instead of
+  zellij's manual rename (`Ctrl p` `c`) — a manual rename overrides the shell title and
+  hides the path.
   Install: `grep -q zellij-pane-title ~/.bashrc || cat bash/pane-title.sh >> ~/.bashrc`.
 
 Not backed up (reinstall or regenerate): pi skills / prompts / profiles, npm addons
