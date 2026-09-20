@@ -1,0 +1,21 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/kanagawa_wave.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+startup_mode = "Maximized"
+padding = { x = 10, y = 10 }
+
+[font]
+size = 11.0
+
+[colors.cursor]
+cursor = '#F5DEB3'   # wheat — visible on kanagawa bg
+text = '#1f1f28'      # dark text under the cursor
+
+[terminal]
+shell = { program = "zellij", args = ["attach", "-c", "main"] }
