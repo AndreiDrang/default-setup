@@ -347,6 +347,12 @@ default_mode "locked"
 //   - "none"   - no frames at all (identical to pane_frames false)
 // Runtime: zellij action set-pane-frame-style full|titles|none
 pane_frame_style "full"
+
+// Render stacked panes as a list of one-line titles (0.45 default)
+// with the expanded pane pinned to the bottom of the stack.
+// false = pre-0.45.0 behavior: expanded pane rendered in place,
+// stacked panes look like normal collapsed panes.
+stacked_pane_list false
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
