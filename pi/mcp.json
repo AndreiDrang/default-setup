@@ -1,0 +1,79 @@
+{
+  "settings": {
+    "toolPrefix": "server",
+    "idleTimeout": 10,
+    "directTools": false
+  },
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "auth": false,
+      "lifecycle": "lazy",
+      "headers": {
+        "CONTEXT7_API_KEY": "<YOUR_CONTEXT7_KEY>"
+      }
+    },
+    "cloudflare-docs": {
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "auth": false,
+      "lifecycle": "lazy"
+    },
+    "pg-aiguide": {
+      "url": "https://mcp.tigerdata.com/docs",
+      "auth": false,
+      "lifecycle": "lazy"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ],
+      "lifecycle": "lazy"
+    },
+    "web-search-prime": {
+      "url": "https://api.z.ai/api/mcp/web_search_prime/mcp",
+      "auth": false,
+      "lifecycle": "lazy",
+      "headers": {
+        "Authorization": "Bearer <YOUR_ZAI_API_TOKEN>"
+      }
+    },
+    "osgrep": {
+      "command": "osgrep",
+      "args": [
+        "mcp"
+      ],
+      "lifecycle": "lazy"
+    },
+    "drawio": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@drawio/mcp"
+      ],
+      "lifecycle": "lazy"
+    },
+    "codegraph": {
+      "command": "codegraph",
+      "args": [
+        "serve",
+        "--mcp"
+      ],
+      "lifecycle": "lazy"
+    },
+    "zread": {
+      "url": "https://api.z.ai/api/mcp/zread/mcp",
+      "auth": false,
+      "lifecycle": "lazy",
+      "headers": {
+        "Authorization": "Bearer <YOUR_ZAI_API_TOKEN>"
+      }
+    },
+    "fff": {
+      "command": "fff-mcp",
+      "args": [],
+      "lifecycle": "lazy"
+    }
+  }
+}

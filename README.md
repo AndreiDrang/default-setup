@@ -1,6 +1,6 @@
-# default-setup — Alacritty + Zellij baseline
+# default-setup — Alacritty + Zellij + pi baseline
 
-Personal terminal-stack baseline for restoring a fresh machine to a known-good state.
+Personal terminal + AI-CLI stack baseline for restoring a fresh machine to a known-good state.
 Captured 2026-09-20 after fixing the "almost black screen" drift (see [Backstory](#backstory)).
 
 ## Stack and versions (as captured)
@@ -11,6 +11,7 @@ Captured 2026-09-20 after fixing the "almost black screen" drift (see [Backstory
 | Zellij      | 0.45.1     | `~/.config/zellij/config.kdl`           | `zellij/config.kdl`               |
 | Theme file  | Kanagawa Wave | `~/.config/alacritty/themes/kanagawa_wave.toml` | `alacritty/themes/kanagawa_wave.toml` |
 | Bash        | 5.3.9      | (no customization — stock `~/.bashrc`)  | —                                 |
+| pi (AI coding agent) | 0.86.1 — npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 | `~/.pi/agent/` | `pi/`    |
 | OS          | Ubuntu 26.04.1 LTS (Wayland) | —                      | —                                 |
 
 Install on Ubuntu: `sudo apt install alacritty zellij` (or grab zellij from its
@@ -27,6 +28,14 @@ default-setup/
 │       └── kanagawa_wave.toml       # Kanagawa Wave palette (all 16 + selection + indexed 16/17)
 └── zellij/
     └── config.kdl                   # full zellij config: keybinds, options, theme_dark/light
+└── pi/
+    ├── settings.json                # pi settings: default model, packages, subagent overrides
+    ├── mcp.json                     # 10 MCP servers — SANITIZED (placeholders, no real tokens)
+    ├── extensions/                  # local extensions: herdr-agent-state.ts, tokenjuice.js
+    ├── prompts/                     # 7 prompt templates (init-agents/architecture/design, …)
+    ├── skills/                      # 10 personal skills (~/.pi/agent/skills)
+    ├── profiles/pi-subagents/       # subagent profiles
+    └── agents-skills/               # shared cross-agent skills (~/.agents/skills)
 ```
 
 The backup is **self-sufficient**: no external repo clone is required, because the
@@ -49,6 +58,8 @@ cp zellij/config.kdl                    ~/.config/zellij/
 # 3. Verify
 zellij setup --check        # expect: [CONFIG FILE]: Well defined
 alacritty --version && zellij --version
+
+# 4. pi coding agent — see the dedicated section below for addons + configs + secrets
 ```
 
 Then just open Alacritty — it starts `zellij attach -c main` automatically
@@ -72,6 +83,13 @@ git clone --depth 1 https://github.com/alacritty/alacritty-theme ~/.config/alacr
 cp ~/.config/alacritty/alacritty.toml             ~/Documents/Prog/Private/default-setup/alacritty/
 cp ~/.config/alacritty/themes/kanagawa_wave.toml  ~/Documents/Prog/Private/default-setup/alacritty/themes/
 cp ~/.config/zellij/config.kdl                    ~/Documents/Prog/Private/default-setup/zellij/
+cp ~/.pi/agent/settings.json                      ~/Documents/Prog/Private/default-setup/pi/
+cp ~/.pi/agent/extensions/*                       ~/Documents/Prog/Private/default-setup/pi/extensions/
+cp ~/.pi/agent/prompts/*                          ~/Documents/Prog/Private/default-setup/pi/prompts/
+rm -rf ~/Documents/Prog/Private/default-setup/pi/skills ~/Documents/Prog/Private/default-setup/pi/agents-skills
+cp -r ~/.pi/agent/skills                          ~/Documents/Prog/Private/default-setup/pi/skills
+cp -r ~/.agents/skills                            ~/Documents/Prog/Private/default-setup/pi/agents-skills
+# mcp.json — ALWAYS re-sanitize (see the pi section), never cp it raw
 cd ~/Documents/Prog/Private/default-setup && git add -A && git commit -m "refresh configs"
 ```
 
@@ -94,6 +112,87 @@ cd ~/Documents/Prog/Private/default-setup && git add -A && git commit -m "refres
 5. **Live reload**: Alacritty re-reads its config on save (changes apply instantly to
    open windows). Zellij watches `config.kdl` from 0.45 — `touch` the file or run
    `zellij action ...` from a pane. There is no `ReloadConfig` keybind anymore.
+
+## pi coding agent (AI CLI)
+
+Config root: `~/.pi/agent/` (overridable via `PI_CONFIG_DIR`). Version **0.86.1**, installed
+globally via npm (`@earendil-works/pi-coding-agent`) under **nvm Node v24.16.0**.
+
+### What's backed up
+
+| Backup path                | Live path                     | Contents |
+|----------------------------|-------------------------------|----------|
+| `pi/settings.json`         | `~/.pi/agent/settings.json`   | theme `dark`, default provider/model `zai/glm-5.3` + thinking `high`, enabled `packages` list, subagent model overrides (scout/worker → gpt-5.6-luna, researcher → glm-5.2, oracle → gpt-5.6-terra) |
+| `pi/mcp.json`              | `~/.pi/agent/mcp.json`        | 10 MCP servers (context7, cloudflare-docs, pg-aiguide, playwright, web-search-prime, osgrep, drawio, codegraph, zread, fff) — **SANITIZED** |
+| `pi/extensions/`           | `~/.pi/agent/extensions/`     | local extensions: `herdr-agent-state.ts`, `tokenjuice.js` (vendored, 250 KB) |
+| `pi/prompts/`              | `~/.pi/agent/prompts/`        | 7 templates: init-agents, init-architecture, init-design, init-custom-skill, commit-changes, copilot-instructions, hard-plan-execute |
+| `pi/skills/`               | `~/.pi/agent/skills/`         | 10 personal skills: agents-sdk, cloudflare, cloudflare-worker-readme, durable-objects, mcp-server-architecture, okf-knowledge, python-docs-and-comments, tests-creation, workers-best-practices, wrangler |
+| `pi/profiles/pi-subagents/`| `~/.pi/agent/profiles/pi-subagents/` | subagent profiles |
+| `pi/agents-skills/`        | `~/.agents/skills/`           | shared cross-agent skill dir: SEO toolchain (keyword-research, competitor-analysis, merge-ready, …) + Cloudflare/agents-sdk reference mirrors |
+
+### Addons — reinstall, don't copy
+
+npm addons live in `~/.pi/agent/npm/node_modules` (never backed up). Reinstall with:
+
+```bash
+for p in context-mode pi-mcp-adapter @ff-labs/pi-fff @juicesharp/rpiv-ask-user-question \
+         @firstpick/pi-extension-git-footer-status pi-subagents @tmustier/pi-usage-extension \
+         @juicesharp/rpiv-todo pi-lens; do pi install npm:$p; done
+```
+
+Versions as captured in `~/.pi/agent/npm/package.json`: context-mode ^1.0.169,
+pi-mcp-adapter ^2.34.0, @ff-labs/pi-fff ^0.10.6, @juicesharp/* ^2.10.1,
+@firstpick/pi-extension-git-footer-status ^0.5.4, pi-subagents ^0.70.0,
+@tmustier/pi-usage-extension ^0.9.4, pi-lens ^4.2.1.
+
+> **Drift note**: `@zhushanwen/pi-statusline` ^0.6.0 and `pi-token-speed` ^0.7.1 are
+> installed in npm but NOT listed in settings.json `packages` (installed-but-disabled).
+> Decide deliberately whether to re-enable on restore — the enabled set is the
+> `packages` array in settings.json, and both places must stay in sync.
+
+### Secrets policy
+
+- `pi/mcp.json` in this repo is a **sanitized copy**: `Bearer <YOUR_ZAI_API_TOKEN>`
+  (web-search-prime, zread) and `<YOUR_CONTEXT7_KEY>` (context7) are placeholders.
+- `~/.pi/agent/auth.json` (provider OAuth/API credentials) is deliberately **not**
+  backed up — re-authenticate each provider on the new machine (first `pi` run
+  triggers the login flow, or use the built-in auth command).
+- Stateful/ephemeral stuff is excluded: `sessions/`, `missions/`, `fff/` (frecency+history),
+  `token-stats/`, `cache-ratio/`, `mcp-cache.json`, `mcp-npx-cache.json`,
+  `models-store.json`, `run-history.jsonl`, `statusline_cache.json`,
+  `usage-extension-cache.json`, `trust.json` (per-project trust grants),
+  `bin/` (fd/rg — auto-downloaded by pi).
+
+### Restore
+
+```bash
+# 1. Node + pi itself
+nvm install 24 && nvm alias default 24
+npm install -g @earendil-works/pi-coding-agent   # pinned: 0.86.1
+
+# 2. Addons (see loop above)
+
+# 3. Configs
+mkdir -p ~/.pi/agent ~/.agents
+cp pi/settings.json ~/.pi/agent/
+cp pi/extensions/*  ~/.pi/agent/extensions/
+cp pi/prompts/*     ~/.pi/agent/prompts/
+cp -r pi/skills/*   ~/.pi/agent/skills/
+cp -r pi/profiles/pi-subagents ~/.pi/agent/profiles/
+cp -r pi/agents-skills ~/.agents/skills
+cp pi/mcp.json ~/.pi/agent/mcp.json && chmod 600 ~/.pi/agent/mcp.json
+
+# 4. Fill the two token placeholders in ~/.pi/agent/mcp.json, then re-login providers
+```
+
+### Refresh (mcp.json must be re-sanitized every time!)
+
+```bash
+python3 -c "import re; d=open('/home/homer/.pi/agent/mcp.json').read(); \
+  d=re.sub(r'Bearer [A-Za-z0-9._-]+','Bearer <YOUR_ZAI_API_TOKEN>',d); \
+  d=re.sub(r'(\"CONTEXT7_API_KEY\":\s*\")[^\"]*',r'\1<YOUR_CONTEXT7_KEY>',d); \
+  open('pi/mcp.json','w').write(d)"
+```
 
 ## Zellij cheat sheet (as configured)
 

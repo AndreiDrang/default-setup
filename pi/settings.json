@@ -1,0 +1,45 @@
+{
+  "lastChangelogVersion": "0.86.1",
+  "theme": "dark",
+  "defaultProvider": "zai",
+  "defaultModel": "glm-5.3",
+  "defaultThinkingLevel": "high",
+  "packages": [
+    "npm:context-mode",
+    "npm:pi-mcp-adapter",
+    "npm:@ff-labs/pi-fff",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@firstpick/pi-extension-git-footer-status",
+    "npm:pi-subagents",
+    "npm:@tmustier/pi-usage-extension",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-lens"
+  ],
+  "showHardwareCursor": true,
+  "terminal": {
+    "clearOnShrink": true,
+    "showTerminalProgress": true
+  },
+  "steeringMode": "all",
+  "followUpMode": "all",
+  "doubleEscapeAction": "none",
+  "compaction": {
+    "enabled": true
+  },
+  "subagents": {
+    "agentOverrides": {
+      "scout": {
+        "model": "openai-codex/gpt-5.6-luna"
+      },
+      "worker": {
+        "model": "openai-codex/gpt-5.6-luna"
+      },
+      "researcher": {
+        "model": "zai/glm-5.2"
+      },
+      "oracle": {
+        "model": "openai-codex/gpt-5.6-terra"
+      }
+    }
+  }
+}
