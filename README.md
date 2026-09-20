@@ -31,8 +31,7 @@ default-setup/
 └── pi/
     ├── settings.json                # pi settings: default model, packages, subagent overrides
     ├── mcp.json                     # 10 MCP servers — SANITIZED (placeholders, no real tokens)
-    ├── extensions/                  # local extensions: herdr-agent-state.ts, tokenjuice.js
-    └── profiles/pi-subagents/       # subagent profiles
+    └── extensions/                  # local extensions: herdr-agent-state.ts, tokenjuice.js
 ```
 
 The backup is **self-sufficient**: no external repo clone is required, because the
@@ -118,14 +117,14 @@ globally via npm (`@earendil-works/pi-coding-agent`) under **nvm Node v24.16.0**
 | `pi/settings.json`         | `~/.pi/agent/settings.json`   | theme `dark`, default provider/model `zai/glm-5.3` + thinking `high`, enabled `packages` list, subagent model overrides (scout/worker → gpt-5.6-luna, researcher → glm-5.2, oracle → gpt-5.6-terra) |
 | `pi/mcp.json`              | `~/.pi/agent/mcp.json`        | 10 MCP servers (context7, cloudflare-docs, pg-aiguide, playwright, web-search-prime, osgrep, drawio, codegraph, zread, fff) — **SANITIZED** |
 | `pi/extensions/`           | `~/.pi/agent/extensions/`     | local extensions: `herdr-agent-state.ts`, `tokenjuice.js` (vendored, 250 KB) |
-| `pi/profiles/pi-subagents/`| `~/.pi/agent/profiles/pi-subagents/` | subagent profiles |
 
-**Skills and prompt templates are deliberately not backed up** (`~/.pi/agent/skills/`,
-`~/.agents/skills/`, `~/.pi/agent/prompts/`): skills are re-installable stock/reference
-content (Cloudflare docs bundle, agents-sdk, SEO toolchain). The prompts were personal
-slash commands — kept as inventory for manual recreation: `/init-agents`, `/init-architecture`,
+**Deliberately not backed up:** skills (`~/.pi/agent/skills/`, `~/.agents/skills/` —
+re-installable stock/reference content), prompt templates (`~/.pi/agent/prompts/` —
+personal slash commands, kept as an inventory note below), profiles
+(`~/.pi/agent/profiles/` — empty anyway), plus all secrets/state (see below).
+Personal prompts inventory for manual recreation: `/init-agents`, `/init-architecture`,
 `/init-design`, `/init-custom-skill`, `/commit-changes`, `/hard-plan-execute`,
-`copilot-instructions` — re-fetch from wherever they were originally authored if needed.
+`copilot-instructions`.
 
 ### Addons — reinstall, don't copy
 
@@ -173,7 +172,6 @@ npm install -g @earendil-works/pi-coding-agent   # pinned: 0.86.1
 mkdir -p ~/.pi/agent
 cp pi/settings.json ~/.pi/agent/
 cp pi/extensions/*  ~/.pi/agent/extensions/
-cp -r pi/profiles/pi-subagents ~/.pi/agent/profiles/
 cp pi/mcp.json ~/.pi/agent/mcp.json && chmod 600 ~/.pi/agent/mcp.json
 
 # 4. Fill the two token placeholders in ~/.pi/agent/mcp.json, then re-login providers
