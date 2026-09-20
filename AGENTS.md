@@ -30,10 +30,14 @@ When live configs have changed and the backup must catch up:
 5. Verify after any restore/refresh: `zellij setup --check` and
    `alacritty --version && zellij --version`.
 
-## Mandatory: fill the change log
+## Mandatory: fill the change log (config changes only)
 
-After **every** change to this repo (config refresh, README/AGENTS edit, new
-file — anything), record it in `log.md`:
+Record an entry in `log.md` **only when the stored config data changes** —
+anything under `alacritty/`, `zellij/`, or `pi/` (including version bumps
+that also touch the version table in `README.md`).
+
+Do **not** log changes to `README.md` prose, `AGENTS.md`, `log.md` itself,
+or any other non-config files — those need no changelog entry.
 
 - Entry format: a `## YYYY-MM-DD` heading followed by a bullet list of what
   changed and why.
