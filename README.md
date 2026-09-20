@@ -15,9 +15,6 @@ stored config to its destination and you're back at the known-good state.
 | pi coding agent | 0.86.1                       | npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 |
 | OS              | Ubuntu 26.04.1 LTS (Wayland) | —                                                                    |
 
-Install: `sudo apt install alacritty zellij` (or zellij from its
-[official releases](https://github.com/zellij-org/zellij/releases)); pi via npm.
-
 ## Stored configs and where they go
 
 Copy each file to its live location (`mkdir -p` the parent dir first):
@@ -50,7 +47,3 @@ Not backed up (reinstall or regenerate): pi skills / prompts / profiles, npm add
 (reinstall via `pi install npm:<package>`), sessions and state, all secrets.
 Verify after restore: `zellij setup --check` and `alacritty --version && zellij --version`.
 
-## Refreshing the backup
-
-`cp` the live configs over the repo copies (never `cp` raw `mcp.json` — re-sanitize
-the tokens first), then commit.
