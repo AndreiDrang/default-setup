@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-25
+
+- `pi/settings.json`: synced from live `~/.pi/agent/settings.json` — updated
+  subagent model overrides: `scout` and `worker` → `openai-codex/gpt-6-luna`,
+  `researcher` → `zai/glm-5.3`, `oracle` → `openai-codex/gpt-6-sol`
+  (was `gpt-5.6-luna` / `glm-5.2` / `gpt-5.6-terra`).
+- `pi/settings.json`: `lastChangelogVersion` bumped `0.86.1` → `0.87.1`.
+
 ## 2026-09-21
 
 - `zellij/config.kdl`: added `pane_frame_style "full"` to restore the pre-0.45
