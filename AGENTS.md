@@ -10,7 +10,7 @@ update, refresh, or extend it.
   [official releases](https://github.com/zellij-org/zellij/releases)); pi via npm
   (`@earendil-works/pi-coding-agent`).
 - Copy each stored config to its live location per the table in `README.md`,
-  fill in the sanitized tokens in `pi/mcp.json`, and re-login each MCP provider.
+  fill in the sanitized tokens in `pi/mcp-adapter.json`, and re-login each MCP provider.
 
 ## Upgrading / refreshing the repo data
 
@@ -22,9 +22,10 @@ When live configs have changed and the backup must catch up:
    - `~/.config/zellij/config.kdl` → `zellij/config.kdl`
    - `~/.pi/agent/settings.json` → `pi/settings.json`
    - `~/.pi/agent/extensions/` → `pi/extensions/`
-2. `pi/mcp.json`: **never** `cp` the raw live file. Diff it manually and
-   re-sanitize secrets — tokens must appear only as
-   `Bearer <YOUR_ZAI_API_TOKEN>` and `<YOUR_CONTEXT7_KEY>` placeholders.
+2. `pi/mcp-adapter.json` (live: `~/.pi/agent/mcp-adapter.json`): **never** `cp`
+   the raw live file. Diff it manually and re-sanitize secrets — tokens must
+   appear only as `Bearer <YOUR_ZAI_API_TOKEN>` and `<YOUR_CONTEXT7_KEY>`
+   placeholders.
 3. If a component version changed, update the version table in `README.md`.
 4. Never commit secrets, `auth.json`, sessions, or other state files.
 5. Verify after any restore/refresh: `zellij setup --check` and

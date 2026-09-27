@@ -12,22 +12,22 @@ stored config to its destination and you're back at the known-good state.
 | Zellij          | 0.45.1                       | multiplexer; Alacritty starts it as its shell                        |
 | Theme           | Kanagawa Wave                | palette file imported by `alacritty.toml`                            |
 | Bash            | 5.3.9                        | stock + dynamic pane-title block (OSC 0)                             |
-| pi coding agent | 0.86.1                       | npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 |
+| pi coding agent | 0.87.1                       | npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 |
 | OS              | Ubuntu 26.04.1 LTS (Wayland) | —                                                                    |
 
 ## Stored configs and where they go
 
 Copy each file to its live location (`mkdir -p` the parent dir first):
 
-| Stored in repo                        | Destination                                     |
-| ------------------------------------- | ----------------------------------------------- |
-| `alacritty/alacritty.toml`            | `~/.config/alacritty/alacritty.toml`            |
-| `alacritty/themes/kanagawa_wave.toml` | `~/.config/alacritty/themes/kanagawa_wave.toml` |
-| `zellij/config.kdl`                   | `~/.config/zellij/config.kdl`                   |
-| `pi/settings.json`                    | `~/.pi/agent/settings.json`                     |
-| `pi/mcp.json`                         | `~/.pi/agent/mcp.json` (then `chmod 600`)       |
-| `pi/extensions/`                      | `~/.pi/agent/extensions/`                       |
-| `bash/pane-title.sh`                 | append to `~/.bashrc`                            |
+| Stored in repo                        | Destination                                       |
+| ------------------------------------- | ------------------------------------------------- |
+| `alacritty/alacritty.toml`            | `~/.config/alacritty/alacritty.toml`              |
+| `alacritty/themes/kanagawa_wave.toml` | `~/.config/alacritty/themes/kanagawa_wave.toml`   |
+| `zellij/config.kdl`                   | `~/.config/zellij/config.kdl`                     |
+| `pi/settings.json`                    | `~/.pi/agent/settings.json`                       |
+| `pi/mcp-adapter.json`                 | `~/.pi/agent/mcp-adapter.json` (then `chmod 600`) |
+| `pi/extensions/`                      | `~/.pi/agent/extensions/`                         |
+| `bash/pane-title.sh`                  | append to `~/.bashrc`                             |
 
 What each piece does:
 
@@ -39,7 +39,8 @@ What each piece does:
   `theme_dark "kanagawa"` / `theme_light "catppuccin-latte"`.
 - **`settings.json`** — pi theme, default model `zai/glm-5.3` + thinking `high`,
   enabled packages list, subagent model overrides.
-- **`mcp.json`** — 10 MCP servers. **Sanitized**: `Bearer <YOUR_ZAI_API_TOKEN>` and
+- **`mcp-adapter.json`** — 10 MCP servers (renamed from `mcp.json`: pi-mcp-adapter
+  no longer reads `~/.pi/agent/mcp.json`). **Sanitized**: `Bearer <YOUR_ZAI_API_TOKEN>` and
   `<YOUR_CONTEXT7_KEY>` are placeholders — fill them after restore, then re-login
   each provider (`~/.pi/agent/auth.json` is never backed up).
 - **`extensions/`** — `herdr-agent-state.ts`, `tokenjuice.js` (vendored).

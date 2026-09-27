@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-27
+
+- `pi/mcp-adapter.json`: renamed from `pi/mcp.json` — pi-mcp-adapter no longer
+  reads `~/.pi/agent/mcp.json`; the live file moved to
+  `~/.pi/agent/mcp-adapter.json`. Content unchanged: verified identical to the
+  previous repo copy after masking tokens; sanitization placeholders preserved.
+- `README.md` version table: pi coding agent `0.86.1` → `0.87.1` (missed in
+  the 2026-09-25 refresh).
+
 ## 2026-09-25
 
 - `pi/settings.json`: synced from live `~/.pi/agent/settings.json` — updated
