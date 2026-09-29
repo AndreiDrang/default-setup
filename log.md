@@ -1,5 +1,44 @@
 # Changelog
 
+## 2026-09-29
+
+- Added new `omo/` module — backup of the omo agent config (omo `5.1.1`,
+  engine senpi 2026.9.29), mirroring the `pi/` module layout:
+  - `omo/settings.json` — theme `dark`, default provider
+    `chatgpt-subscription` / model `gpt-6-luna` + thinking `high`, packages
+    list, subagent model overrides.
+  - `omo/mcp-adapter.json` — sanitized from live `~/.omo/agent/mcp-adapter.json`:
+    8 MCP servers + `claude-code` import; real tokens replaced with
+    `Bearer <YOUR_ZAI_API_TOKEN>` / `<YOUR_CONTEXT7_KEY>` placeholders.
+  - `omo/extensions/` — 7 vendored extensions: `herdr-agent-state.ts`,
+    `tokenjuice.js`, `rtk.ts`, `diff.js`, `tps.js`, `files.js`,
+    `prompt-url-widget.js` (verified byte-identical to live).
+  - Deliberately excluded: `auth.json` (zai / Copilot / ChatGPT tokens),
+    sessions, caches, telemetry (`omo-senpi/`), vendored `bin/rg`+`fd`,
+    skills/prompts (gist-fetched like pi's).
+- `README.md`: version table, stored-configs table, and module notes extended
+  with the omo rows (part of the module addition).
+- `omo/` refresh (same day, live omo gained new files; binary still `5.1.1`):
+  - Added `omo/models.json` — new local provider-routing config: `openai`,
+    `zai-coding-plan`, `opencode` all via the sleeve proxy at
+    `http://127.0.0.1:17321`; no secrets.
+  - Added `omo/skills/` — two new custom skills from
+    `~/.omo/agent/skills/`: `hard-planner`, `hard-planner-research-writer`
+    (gist-fetched skills stay excluded).
+  - `omo/settings.json`, `omo/mcp-adapter.json`, `omo/extensions/`: verified
+    byte-identical to live — unchanged.
+- `README.md` / `AGENTS.md`: stored-configs table, bullets, and refresh
+  instructions extended for `omo/models.json` + `omo/skills/`.
+- `omo/settings.json`: synced from live — added per-model thinking prefs:
+  `modelThinkingLevels` and `modelLastOnThinkingLevels` set
+  `chatgpt-subscription/gpt-6-luna-fast` → `low` (+ `model-command-search`
+  tips-history entry). Everything else verified unchanged
+  (`mcp-adapter.json`, `models.json`, `extensions/`, both custom skills);
+  omo still `5.1.1`.
+- `omo/settings.json`: synced again — `tipsHistory` gained two more entries
+  (`model-cycling-scope`, `thinking-budgets`); no functional config change.
+  All other module files re-verified unchanged; omo still `5.1.1`.
+
 ## 2026-09-27
 
 - `pi/mcp-adapter.json`: renamed from `pi/mcp.json` — pi-mcp-adapter no longer
