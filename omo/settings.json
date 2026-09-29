@@ -1,0 +1,63 @@
+{
+  "lastChangelogVersion": "0.87.1",
+  "theme": "dark",
+  "defaultProvider": "chatgpt-subscription",
+  "defaultModel": "gpt-6-luna",
+  "defaultThinkingLevel": "high",
+  "packages": [
+    "npm:context-mode",
+    "npm:pi-mcp-adapter",
+    "npm:@ff-labs/pi-fff",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@firstpick/pi-extension-git-footer-status",
+    "npm:pi-subagents",
+    "npm:@tmustier/pi-usage-extension",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-lens"
+  ],
+  "showHardwareCursor": true,
+  "terminal": {
+    "clearOnShrink": true,
+    "showTerminalProgress": true
+  },
+  "steeringMode": "all",
+  "followUpMode": "all",
+  "doubleEscapeAction": "none",
+  "compaction": {
+    "enabled": true
+  },
+  "subagents": {
+    "agentOverrides": {
+      "scout": {
+        "model": "openai-codex/gpt-6-luna"
+      },
+      "worker": {
+        "model": "openai-codex/gpt-6-luna"
+      },
+      "researcher": {
+        "model": "zai/glm-5.3"
+      },
+      "oracle": {
+        "model": "openai-codex/gpt-6-sol"
+      }
+    }
+  },
+  "changelogSeen": {
+    "omo": "5.1.1"
+  },
+  "tipsHistory": {
+    "thinking-level": 1790671542366,
+    "efforts-command": 1790671544365,
+    "favorite-model-rotation": 1790671890934,
+    "model-selector-favorites": 1790672010720,
+    "model-command-search": 1790674453042,
+    "model-cycling-scope": 1790674697553,
+    "thinking-budgets": 1790674712279
+  },
+  "modelThinkingLevels": {
+    "chatgpt-subscription/gpt-6-luna-fast": "low"
+  },
+  "modelLastOnThinkingLevels": {
+    "chatgpt-subscription/gpt-6-luna-fast": "low"
+  }
+}

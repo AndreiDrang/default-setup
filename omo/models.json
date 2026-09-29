@@ -1,0 +1,25 @@
+{
+  "providers": {
+    "openai": {
+      "baseUrl": "http://127.0.0.1:17321",
+      "headers": {
+        "sleeve-provider": "codex",
+        "sleeve-harness": "opencode"
+      }
+    },
+    "zai-coding-plan": {
+      "baseUrl": "http://127.0.0.1:17321",
+      "headers": {
+        "sleeve-provider": "zai-coding-plan",
+        "sleeve-harness": "opencode"
+      }
+    },
+    "opencode": {
+      "baseUrl": "http://127.0.0.1:17321",
+      "headers": {
+        "sleeve-provider": "opencode-go",
+        "sleeve-harness": "opencode"
+      }
+    }
+  }
+}

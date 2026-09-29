@@ -1,0 +1,41 @@
+{
+  "imports": [
+    "claude-code"
+  ],
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "<YOUR_CONTEXT7_KEY>"
+      }
+    },
+    "cloudflare-docs": {
+      "url": "https://docs.mcp.cloudflare.com/mcp"
+    },
+    "pg-aiguide": {
+      "url": "https://mcp.tigerdata.com/docs"
+    },
+    "web-search-prime": {
+      "url": "https://api.z.ai/api/mcp/web_search_prime/mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_ZAI_API_TOKEN>"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "codedeebee": {
+      "command": "npx",
+      "args": ["-y", "codedeebee", "mcp"]
+    },
+    "osgrep": {
+      "command": "osgrep",
+      "args": ["mcp"]
+    },
+    "fff": {
+      "command": "fff-mcp",
+      "args": []
+    }
+  }
+}
