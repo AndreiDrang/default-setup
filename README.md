@@ -12,7 +12,7 @@ stored config to its destination and you're back at the known-good state.
 | Zellij          | 0.45.1                       | multiplexer; Alacritty starts it as its shell                        |
 | Theme           | Kanagawa Wave                | palette file imported by `alacritty.toml`                            |
 | Bash            | 5.3.9                        | stock + dynamic pane-title block (OSC 0)                             |
-| pi coding agent | 0.87.1                       | npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 |
+| pi coding agent | 0.99.1                       | npm global `@earendil-works/pi-coding-agent` under nvm Node v24.16.0 |
 | omo agent       | 5.1.1 (senpi 2026.9.29)      | pi-family CLI agent; bun global `omo-ai` under `~/.bun`              |
 | OS              | Ubuntu 26.04.1 LTS (Wayland) | —                                                                    |
 
@@ -28,6 +28,7 @@ Copy each file to its live location (`mkdir -p` the parent dir first):
 | `pi/settings.json`                    | `~/.pi/agent/settings.json`                       |
 | `pi/mcp-adapter.json`                 | `~/.pi/agent/mcp-adapter.json` (then `chmod 600`) |
 | `pi/extensions/`                      | `~/.pi/agent/extensions/`                         |
+| `pi/skills/`                          | `~/.pi/agent/skills/`                             |
 | `omo/settings.json`                   | `~/.omo/agent/settings.json`                      |
 | `omo/mcp-adapter.json`                | `~/.omo/agent/mcp-adapter.json` (`chmod 600`)     |
 | `omo/extensions/`                     | `~/.omo/agent/extensions/`                        |
@@ -50,6 +51,11 @@ What each piece does:
   `<YOUR_CONTEXT7_KEY>` are placeholders — fill them after restore, then re-login
   each provider (`~/.pi/agent/auth.json` is never backed up).
 - **`extensions/`** — `herdr-agent-state.ts`, `tokenjuice.js` (vendored).
+- **`pi/skills/`** — all 10 skills vendored from `~/.pi/agent/skills/`:
+  `agents-sdk`, `cloudflare`, `cloudflare-worker-readme`, `durable-objects`,
+  `mcp-server-architecture`, `okf-knowledge`, `python-docs-and-comments`,
+  `tests-creation`, `workers-best-practices`, `wrangler` (originally
+  gist-fetched; stored here so a restore doesn't depend on the gists).
 - **`omo/settings.json`** — omo theme `dark`, default provider
   `chatgpt-subscription` model `gpt-6-luna` + thinking `high`, enabled packages
   list, subagent model overrides (same shape as pi's settings).
@@ -74,9 +80,10 @@ What each piece does:
 
 Not backed up (reinstall or regenerate): pi/omo prompts / profiles,
 npm addons (reinstall via `pi install npm:<package>`), sessions and state,
-all secrets. Pi skills and omo's shared skills are installed from gists —
-re-fetch them from <https://gist.github.com/AndreiDrang> (the two custom
-omo hard-planner skills are stored in `omo/skills/`). Also never backed up
+all secrets. omo's gist-fetched skills are not stored — re-fetch them from
+<https://gist.github.com/AndreiDrang> (pi skills are stored in `pi/skills/`,
+and the two custom omo hard-planner skills are stored in `omo/skills/`).
+Also never backed up
 for omo: `auth.json` (zai / GitHub Copilot / ChatGPT-subscription tokens),
 sessions, caches, telemetry (`omo-senpi/`), and vendored `bin/` (`rg`, `fd`).
 Verify after restore: `zellij setup --check` and

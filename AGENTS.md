@@ -23,6 +23,7 @@ When live configs have changed and the backup must catch up:
    - `~/.config/zellij/config.kdl` → `zellij/config.kdl`
    - `~/.pi/agent/settings.json` → `pi/settings.json`
    - `~/.pi/agent/extensions/` → `pi/extensions/`
+   - `~/.pi/agent/skills/` → `pi/skills/`
    - `~/.omo/agent/settings.json` → `omo/settings.json`
    - `~/.omo/agent/extensions/` → `omo/extensions/`
    - `~/.omo/agent/models.json` → `omo/models.json`

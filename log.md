@@ -38,6 +38,24 @@
 - `omo/settings.json`: synced again — `tipsHistory` gained two more entries
   (`model-cycling-scope`, `thinking-budgets`); no functional config change.
   All other module files re-verified unchanged; omo still `5.1.1`.
+- `pi/` refresh (pi `0.87.1` → `0.99.1`):
+  - `pi/settings.json`: synced from live — `lastChangelogVersion`
+    `0.87.1` → `0.99.1`; subagent model overrides updated: `scout`/`worker`
+    → `openai-codex/gpt-5.6-luna`, `researcher` → `zai/glm-5.2`, `oracle`
+    → `openai-codex/gpt-5.6-terra` (was `gpt-6-luna` / `glm-5.3` /
+    `gpt-6-sol`).
+  - Added `pi/skills/` — all 10 skills vendored from `~/.pi/agent/skills/`
+    (359 files: `agents-sdk`, `cloudflare`, `cloudflare-worker-readme`,
+    `durable-objects`, `mcp-server-architecture`, `okf-knowledge`,
+    `python-docs-and-comments`, `tests-creation`, `workers-best-practices`,
+    `wrangler`). Previously excluded as gist-fetched — now stored so a
+    restore doesn't depend on the gists.
+  - `pi/mcp-adapter.json`: verified identical to live after masking tokens —
+    unchanged, placeholders intact. `pi/extensions/`: verified byte-identical
+    to live — unchanged.
+- `README.md` / `AGENTS.md`: pi version table bumped `0.87.1` → `0.99.1`,
+  stored-configs table / refresh list / module notes extended for
+  `pi/skills/`; "not backed up" paragraph updated (pi skills now stored).
 
 ## 2026-09-27
 
